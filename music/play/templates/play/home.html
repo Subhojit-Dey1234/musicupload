@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://kit.fontawesome.com/b03b99933b.js" crossorigin="anonymous"></script>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+</head>
+<style>
+    .delete{
+        position: relative;
+        width: fit-content;
+        right: -15px;
+        top: 28px;
+}
+.delete:hover{
+    color: white;
+}
+</style>
+<body>
+    {% if profile.profile_image == "" %}
+        <img class="profile-image" src="/media/profile/Profile.jpg" alt="Profile">
+    {% else %}
+        <img class="profile-image" src ="{{profile.profile_image.url}}" alt="jhdfjks">
+    {% endif %}  
+    {{formLike}}
+    <div class="nav">
+        <img src="{% static 'css/music.svg' %}" alt="Music" class="logo">
+        <div class="nav-container">
+            <a href="{% url 'home' %}" class="Home">Home</a>
+            <a href="{% url 'UserProfile' %}" class="Profile">Profile</a>
+                <form action="{% url 'logout' %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit">Log Out</button>
+                </form>
+        </div>
+    </div>
+    <div class="container">
+        <div class="music-1">
+            <header>
+                <h1>Music Player</h1>
+            </header>
+            <div class="form">
+                <form action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="input">
+                        <label for="id_name">Name:</label>
+                        {{form.name}}
+                    </div>
+                    <div class="input">
+                        <label for="id_file">File:</label>
+                        {{form.file}}
+                    </div>
+                    <div class="input">
+                        <label for="id_images">Images:</label>
+                        {{form.images}}
+                    </div>
+                    <button type="submit" class="upload"><i class="fas fa-cloud-upload-alt"></i></button>
+                </form>
+            </div>
+        </div>
+        <div class="container-music">
+        {% for music in musics %}
+        {% if music.file %}
+        <a href="{% url 'individual' music.id %}">
+        <div class="music" key={{music.id}} style="background-image: url('{{music.images.url}}'); background-repeat: no-repeat; background-position:center; background-size: cover;">
+            <div class="container-1">
+                <div class="name">
+                    <a href="{% url 'individual' music.id %}" ><h3>Name: {{music.name}}</h3></a>
+                </div>
+                <img src="{% static 'css/play-button.svg' %}" alt="" class="play show">
+                <img src= "{% static 'css/pause-solid.svg' %}" alt="" class="pause">
+                <audio>
+                    <source src="{{music.file.url}}">
+                </audio>
+                <p>Uploaded by <b>{{music.user}}</b></p>
+            </div>
+            <div class="like-container">
+                {% if music.id in likeUserLikesList %}
+                <div class="like {{music.id}}">
+                    <i class="fas fa-thumbs-up" id="grid"></i><a aria-disabled="true" id='grid'>{{music.like}}</a>
+                </div>
+                {% else %}
+                <div class="like {{music.id}}">
+                    <i class="far fa-thumbs-up" id="grid"></i><a aria-disabled="true" id='grid'>{{music.like}}</a>
+                </div>
+                {% endif %}
+                {% endif %}
+                <!-- <div class="like {{music.id}}">
+                    <i class="fas fa-thumbs-down" id="grid"></i><a aria-disabled="true" id='grid'>{{music.like}}</a>
+                </div> -->
+            </div>
+            {% if music.user == profile.user %}
+            <div class="delete {{music.id}}" style="cursor: pointer;">
+                <i class="fas fa-trash-alt"></i>
+            </div>
+            {% endif %}
+        </div>
+        </a>
+        {% endfor %}
+        </div>
+    </div>
+<script>
+    document.querySelector('#id_file').setAttribute('accept','audio/*')
+</script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="{% static 'js/app.js' %}"></script>
+</body>
+</html>

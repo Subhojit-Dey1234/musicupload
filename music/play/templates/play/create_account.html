@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account</title>
+    <link rel="stylesheet" href="{% static 'css/account.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="form">
+        <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-element">
+                <label for="id_name">Name:</label>
+                {{form.name}}
+            </div>
+            <!-- <div class="form-element">
+                <label for="id_profile_image">Profile image:</label>
+                Currently:<a href="{{profile.profile_image.url}}">{{profile.profile_image.name}}</a>
+            </div> -->
+            <div class="form-element">
+                {{form.profile_image}}
+            </div>
+            <button type="submit">Upload</button>
+        </form>
+    </div>
+    <div class="form-data">
+        <h2>User : {{profile.user}}</h2>
+        <h3>Username: {{profile.name}}</h3>
+        {% if profile == "" %}
+        <!-- <p>hkhsfhsihihsrt</p> -->
+            <img src='/media/profile/Profile.jpg' alt="profile" class="profile-image">
+        {% else %}
+            <img src="{{profile.profile_image.url}}" alt="profile" class="profile-image">
+        {% endif %}
+    </div>
+</body>
+<script>
+    var link = document.querySelector('.form-element a');
+    var checkbox = document.querySelector('#profile_image-clear_id');
+    var label = document.querySelector('[for="profile_image-clear_id"]');
+    var word = document.getElementsByClassName('form-element')[1];
+    link.remove();
+    checkbox.remove();
+    label.remove();
+</script>
+</html>

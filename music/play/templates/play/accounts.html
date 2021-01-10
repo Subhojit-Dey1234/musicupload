@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% for music in musics %}
+        {% if music.file %}
+        <div class="music">
+            <div class="container-1">
+                <h3>{{music.name}}</h3>
+                <img src="{% static 'css/play-button.svg' %}" alt="" class="play show">
+                <img src= "{% static 'css/pause-solid.svg' %}" alt="" class="pause">
+                <audio>
+                    <source src="{{music.file.url}}">
+                </audio>
+                <p>Uploaded by {{music.user}}</p>
+            </div>
+            <div class="container-2">
+                <img src="{{music.images.url}}" alt="">
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+</body>
+<script src="{% static 'js/app.js' %}"></script>
+</html>

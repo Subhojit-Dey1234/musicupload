@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<style>
+    form{
+        width: 50vh;
+        position: relative;
+        left: 14%;
+        margin: 2px;
+        margin: auto;
+        display: grid;
+        grid-template-rows: repeat(3, 60px);
+        transform: translate(-50%,-50%);
+    }
+    input, button{
+        margin: 2px;
+    }
+    button{
+        width: 65px;
+        height: 40px;
+        position: relative;
+        margin: auto;
+        background-color: royalblue;
+        color: white;
+        border: none;
+        border-radius: 2px;
+    }
+    .body{
+        position: relative;
+        top: 50vh;
+        display: grid;
+        grid-template-rows: 1fr 1fr;
+    }
+    .messsage{
+        text-align: center;
+    }
+</style>
+<body>
+    <div class="body">
+    <form action="" method="POST">
+        {% csrf_token %}
+        <input type="text" name="name" placeholder="Name">
+        <input type="password" name="password" placeholder="Password">
+        <button type="submit">Login</button>
+    </form>
+    <div class="messsage">
+        If you don't have an account. Then <a href="{% url 'signup' %}">Signup</a>
+    </div>
+    {% for message in messages %}
+
+                    <div class="alert alert-success">
+                        <a class="close" href="#" data-dismiss="alert">×</a>
+
+                        {{ message }}
+
+                    </div>
+            {% endfor %}
+</div>
+</body>
+</html>

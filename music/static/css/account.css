@@ -1,0 +1,23 @@
+*{
+    font-family:sans-serif;
+    font-size: 20px;
+}
+.profile-image{
+    width: 200px;
+    height: 200px;
+}
+body{
+    display: flex;
+    justify-content: center;
+}
+.form{
+    width: 35%;
+    align-self: center;
+}
+.form-data{
+    width: 35%;
+    /* background-color: blueviolet; */
+}
+.form-data img{
+    border-radius: 50%;
+}
